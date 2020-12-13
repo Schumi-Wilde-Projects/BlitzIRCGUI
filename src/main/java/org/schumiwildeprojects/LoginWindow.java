@@ -29,7 +29,6 @@ public class LoginWindow {
     private Button connectButton;
     @FXML
     private Button exitButton;
-
     @FXML
     private AnchorPane anchorPane;
 
@@ -65,5 +64,29 @@ public class LoginWindow {
         });
 
         exitButton.setOnAction(actionEvent -> System.exit(0));
+    }
+
+    public String getServerName() {
+        return serverTextField.getText();
+    }
+
+    public String getNick() {
+        return nickTextField.getText();
+    }
+
+    public String getLogin() {
+        return loginTextField.getText();
+    }
+
+    public String getFullName() {
+        return fullNameTextField.getText();
+    }
+
+    public String getChannelName() {
+        return channelNameTextField.getText();
+    }
+
+    public String getPassword() {
+        return passwordField.getText();
     }
 }
