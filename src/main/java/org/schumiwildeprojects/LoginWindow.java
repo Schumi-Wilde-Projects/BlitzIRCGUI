@@ -1,5 +1,7 @@
 package org.schumiwildeprojects;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.schumiwildeprojects.states.ConnectionState;
+import org.schumiwildeprojects.states.MainWindowState;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -32,9 +36,18 @@ public class LoginWindow {
     @FXML
     private AnchorPane anchorPane;
 
+    private Dialog<ButtonType> dialog;
+    private ConnectionState connectionState;
+
     public void initialize() {
+        exitButton.setOnAction(actionEvent -> System.exit(0));
+
         connectButton.setOnAction(actionEvent -> {
-            Dialog<ButtonType> dialog = new Dialog<>();
+            ConnectToServerTask task = new ConnectToServerTask();
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+
+            dialog = new Dialog<>();
             dialog.initOwner(anchorPane.getScene().getWindow());
             dialog.setTitle("Łączenie...");
             dialog.setHeaderText("Proszę czekać...");
@@ -43,27 +56,84 @@ public class LoginWindow {
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             ((Button) dialog.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Anuluj");
 
+            thread.start();
             Optional<ButtonType> result = dialog.showAndWait();
-
+            if (connectionState == ConnectionState.SUCCESSFUL) {
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                dialog.close();
+                return;
+            }
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 Alert connectionCanceledAlert = new Alert(Alert.AlertType.WARNING);
                 connectionCanceledAlert.setTitle("Uwaga");
                 connectionCanceledAlert.setHeaderText("Przerwano połączenie");
                 connectionCanceledAlert.setContentText("Przerwano połączenie z serwerem.");
-
-                Optional<ButtonType> okResult = connectionCanceledAlert.showAndWait();
-                if (okResult.isPresent() && okResult.get() == ButtonType.OK) {
-                    connectionCanceledAlert.close();
-                    dialog.close();
-                }
+                dialog.close();
+                connectionCanceledAlert.show();
             }
+        });
+    }
 
+    private class ConnectToServerTask extends Task<Void> {
+        @Override
+        protected Void call() {
+            try {
+                if (!getServerName().equals(" ") && !getNick().equals(" ") && !getLogin().equals(" ") && !getFullName().equals(" ") &&
+                        !getChannelName().equals(" ")) {
+                    connect();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public void connect() throws IOException {
+        connectionState = App.getInstance().connectToServer(getServerName(), getNick(), getLogin(), getFullName(), getChannelName(),
+                getPassword());
+        if (connectionState == ConnectionState.SUCCESSFUL) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("primary.fxml"));
-            App.openWindow(loader, anchorPane.getScene(), "Komunikacja na kanale", 1280, 720);
-        });
-
-        exitButton.setOnAction(actionEvent -> System.exit(0));
+            Platform.runLater(() -> {
+                App.openWindow(loader, anchorPane.getScene(), "Komunikacja na kanale", 1280, 720);
+                try {
+                    App.getInstance().changeState(new MainWindowState());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.close();
+            });
+        } else if (connectionState == ConnectionState.SERVER_TIMEOUT) {
+            Platform.runLater(() -> {
+                dialog.close();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błąd");
+                alert.setHeaderText("Błąd");
+                alert.setContentText("Nieprawidłowa nazwa serwera. Spróbuj ponownie.");
+                alert.show();
+            });
+        } else if (connectionState == ConnectionState.SERVER_NAME_EMPTY) {
+            Platform.runLater(() -> {
+                dialog.close();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Błąd");
+                alert.setContentText("Brak nazwy serwera. Wypełnij pole serwera.");
+                alert.show();
+            });
+        } else if (connectionState == ConnectionState.FIELDS_NOT_FILLED) {
+            Platform.runLater(() -> {
+                dialog.close();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Błąd");
+                alert.setContentText("Jedno lub więcej pól jest niewypełnione.");
+                alert.show();
+            });
+        }
     }
 
     public String getServerName() {
