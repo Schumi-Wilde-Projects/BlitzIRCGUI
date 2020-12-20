@@ -60,6 +60,7 @@ public class PrimaryWindow {
                     } else if (line.split(" ")[1].equalsIgnoreCase("join")) {
                         messagesStringBuilder.append("Użytkownik ").append(line.substring(1, line.indexOf("!~"))).append(" dołączył do czatu.\n");
                         messageTextArea.setText(messagesStringBuilder.toString());
+                        scrollMessagesToBottom();
                         App.getBufferedWriter().write("NAMES " + App.currentChannel + "\r\n");
                         App.getBufferedWriter().flush();
                     } else if (line.split(" ")[1].equalsIgnoreCase("353")) {
@@ -84,10 +85,13 @@ public class PrimaryWindow {
                         }
                         messagesStringBuilder.append(username).append(": ").append(lineToAdd.toString()).append("\n");
                         messageTextArea.setText(messagesStringBuilder.toString());
+                        scrollMessagesToBottom();
+
                     } else if (line.split(" ")[1].equalsIgnoreCase("quit")) {
                         String username = line.substring(1, line.indexOf("!~"));
                         messagesStringBuilder.append("Użytkownik ").append(username).append(" opuścił czat.\n");
                         messageTextArea.setText(messagesStringBuilder.toString());
+                        scrollMessagesToBottom();
                         App.getBufferedWriter().write("NAMES " + App.currentChannel + "\r\n");
                         App.getBufferedWriter().flush();
                         if (username.equals(App.getCurrentNickname())) {
@@ -112,6 +116,7 @@ public class PrimaryWindow {
                         }
                     }
                     messageTextArea.setText(messagesStringBuilder.toString());
+                    scrollMessagesToBottom();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -126,7 +131,6 @@ public class PrimaryWindow {
         messagesStringBuilder.append("[BlitzIRC] pozwala wysłać wiadomość tylko do konkretnego użytkownika. Inne wiadomości zaczynające się od ukośnika\n")
                 .append("[BlitzIRC] to komendy serwera IRC. Używaj ich tylko wtedy, kiedy wiesz co robisz!\n");
         messageTextArea.setText(messagesStringBuilder.toString());
-
         App.getInstance().initializeServerThread(new Server());
         messageTextField.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -140,6 +144,7 @@ public class PrimaryWindow {
                         messagesStringBuilder.append("[BlitzIRC] Składnia komendy /priv: ")
                                 .append("[BlitzIRC] /priv <nick_uzytkownika> <wiadomosc>");
                         messageTextArea.setText(messagesStringBuilder.toString());
+                        scrollMessagesToBottom();
                     } else {
                         StringBuilder sbMessage = new StringBuilder(commandTokens.get(2));
                         for (int i = 3; i < commandTokens.size(); i++) {
@@ -151,6 +156,7 @@ public class PrimaryWindow {
                             messagesStringBuilder.append(App.getCurrentNickname()).append(" -> ").append(commandTokens.get(1))
                                     .append(": ").append(sbMessage.toString());
                             messageTextArea.setText(messagesStringBuilder.toString());
+                            scrollMessagesToBottom();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -168,6 +174,7 @@ public class PrimaryWindow {
                         App.getBufferedWriter().flush();
                         messagesStringBuilder.append(App.getCurrentNickname()).append(": ").append(messageText).append("\n");
                         messageTextArea.setText(messagesStringBuilder.toString());
+                        scrollMessagesToBottom();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -207,6 +214,12 @@ public class PrimaryWindow {
             }
             System.exit(0);
         });
+    }
+
+    public void scrollMessagesToBottom() {
+        int caretPos = messageTextArea.caretPositionProperty().get();
+        messageTextArea.positionCaret(caretPos);
+        messageTextArea.setScrollTop(Double.MAX_VALUE);
     }
 
     public void leaveChannel() throws IOException {
