@@ -229,6 +229,30 @@ public class App extends Application {
         return connection;
     }
 
+    public static String getCurrentChannel() {
+        return currentChannel;
+    }
+
+    public static String getCurrentServerName() {
+        return currentServerName;
+    }
+
+    public static String getCurrentNickname() {
+        return currentNickname;
+    }
+
+    public static String getCurrentLogin() {
+        return currentLogin;
+    }
+
+    public static String getCurrentFullName() {
+        return currentFullName;
+    }
+
+    public static String getCurrentPassword() {
+        return currentPassword;
+    }
+
     public static BufferedReader getBufferedReader() {
         return bufferedReader;
     }
