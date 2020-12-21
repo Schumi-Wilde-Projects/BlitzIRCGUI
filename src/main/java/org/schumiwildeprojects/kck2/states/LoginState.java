@@ -1,7 +1,7 @@
-package org.schumiwildeprojects.states;
+package org.schumiwildeprojects.kck2.states;
 
-import org.schumiwildeprojects.App;
-import org.schumiwildeprojects.LoginWindow;
+import org.schumiwildeprojects.kck2.App;
+import org.schumiwildeprojects.kck2.LoginWindow;
 
 import java.io.IOException;
 

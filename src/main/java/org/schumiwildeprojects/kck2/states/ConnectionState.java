@@ -1,4 +1,4 @@
-package org.schumiwildeprojects.states;
+package org.schumiwildeprojects.kck2.states;
 
 public enum ConnectionState {
     SERVER_TIMEOUT("Połączenie zostało przerwane. Sprawdź poprawność nazwy serwera."),

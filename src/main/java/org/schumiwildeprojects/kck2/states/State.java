@@ -1,7 +1,6 @@
-package org.schumiwildeprojects.states;
+package org.schumiwildeprojects.kck2.states;
 
-import javafx.application.Application;
-import org.schumiwildeprojects.App;
+import org.schumiwildeprojects.kck2.App;
 
 import java.io.IOException;
 

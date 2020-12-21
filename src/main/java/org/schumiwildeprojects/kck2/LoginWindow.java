@@ -1,17 +1,13 @@
-package org.schumiwildeprojects;
+package org.schumiwildeprojects.kck2;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import org.schumiwildeprojects.states.ConnectionState;
-import org.schumiwildeprojects.states.MainWindowState;
+import org.schumiwildeprojects.kck2.states.ConnectionState;
+import org.schumiwildeprojects.kck2.states.MainWindowState;
 
 import java.io.IOException;
 import java.util.Optional;

@@ -1,17 +1,14 @@
-package org.schumiwildeprojects;
+package org.schumiwildeprojects.kck2;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import org.schumiwildeprojects.states.ConnectionState;
-import org.schumiwildeprojects.states.LoginState;
-import org.schumiwildeprojects.states.State;
+import org.schumiwildeprojects.kck2.states.ConnectionState;
+import org.schumiwildeprojects.kck2.states.LoginState;
+import org.schumiwildeprojects.kck2.states.State;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -79,8 +76,8 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
-        launch();
+    public static void startApp(String[] args) {
+        launch(args);
     }
 
     class ConnectionThread implements Runnable {
