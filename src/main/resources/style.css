@@ -1,0 +1,90 @@
+/* Ustawienia globalne */
+#borderPane, #anchorPane, .dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Nimbus Sans";
+}
+
+/* Przyciski */
+#connectButton, #changeChannelButton {
+    -fx-font-weight: 400;
+    -fx-font-size: 14px;
+    -fx-text-alignment: center;
+    -fx-border-radius: 0;
+    -fx-background-color: #3fb618;
+    -fx-text-fill: #ffffff;
+}
+
+#connectButton:hover, #changeChannelButton:hover {
+    -fx-cursor: pointer;
+    -fx-opacity: 0.7;
+}
+
+#connectButton:pressed, #changeChannelButton:pressed {
+    -fx-background-color: #309111;
+}
+
+#exitButton {
+    -fx-font-weight: 400;
+    -fx-font-size: 14px;
+    -fx-text-alignment: center;
+    -fx-border-radius: 0;
+    -fx-background-color: #ff0039;
+    -fx-text-fill: #ffffff;
+}
+
+#exitButton:hover {
+    -fx-cursor: pointer;
+    -fx-opacity: 0.7;
+}
+
+#exitButton:pressed {
+    -fx-background-color: #ce0000;
+}
+
+/* Pola tekstowe */
+.text-field, .text-area {
+    -fx-font-weight: 400;
+    -fx-font-size: 14px;
+    -fx-text-fill: #495057;
+    -fx-background-color: #ffffff;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 0;
+}
+
+.text-field:focused {
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
+    -fx-border-color: #ccc;
+}
+
+/* Etykiety */
+.label {
+    -fx-font-size: 14px;
+}
+
+/* Lista użytkowników */
+#userListView {
+    -fx-font-weight: 400;
+    -fx-text-fill: #373a3c;
+    -fx-text-alignment: left;
+}
+
+/* Okna dialogowe */
+.dialog-pane > .header-panel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane > .content.label {
+    -fx-font-size: 14px;
+}
+
+.dialog-pane > .button-bar > .button {
+    -fx-font-weight: 400;
+    -fx-text-alignment: center;
+    -fx-border-radius: 0;
+    -fx-background-color: #ff7518;
+    -fx-text-fill: #ffffff;
+}

@@ -185,7 +185,7 @@ public class PrimaryWindow {
         userListView.setEditable(false);
         userListView.setItems(userList);
 
-        changeChannelButton.setOnAction(actionEvent -> {
+        changeChannelButton.setOnAction(actionEvent -> Platform.runLater(() -> {
             try {
 //                App.getInstance().getServerThread().join();
 //                App.getInstance().getResultThread().join();
@@ -195,12 +195,11 @@ public class PrimaryWindow {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Platform.runLater(() -> {
+
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("loginWindow.fxml"));
                 App.openWindow(loader, borderPane.getScene(), "Logowanie", 420, 400);
-            });
-        });
+        }));
 
         exitButton.setOnAction(actionEvent -> {
             try {

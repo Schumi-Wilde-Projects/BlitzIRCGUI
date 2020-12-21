@@ -2,11 +2,13 @@ package org.schumiwildeprojects;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.schumiwildeprojects.states.ConnectionState;
 import org.schumiwildeprojects.states.LoginState;
 import org.schumiwildeprojects.states.State;
@@ -56,7 +58,13 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         changeState(new LoginState());
         scene = new Scene(loadFXML("loginWindow"), 420, 400);
+        scene.getStylesheets().add("style.css");
         stage.setTitle("Logowanie");
+        stage.setResizable(false);
+        stage.setOnCloseRequest(windowEvent -> {
+            Platform.exit();
+            System.exit(0);
+        });
         stage.setScene(scene);
         stage.show();
         cleanup();
@@ -110,8 +118,12 @@ public class App extends Application {
     public static void openWindow(FXMLLoader loader, Scene scene2, String title, int width, int height) {
         try {
             Scene scene = new Scene(loader.load(), width, height);
+            scene.getStylesheets().add("style.css");
             Stage stage = new Stage();
             stage.setTitle(title);
+            stage.setOnCloseRequest(windowEvent -> {
+                System.exit(0);
+            });
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

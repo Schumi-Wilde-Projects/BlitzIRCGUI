@@ -49,6 +49,8 @@ public class LoginWindow {
 
             dialog = new Dialog<>();
             dialog.initOwner(anchorPane.getScene().getWindow());
+            DialogPane dialogPane = dialog.getDialogPane();
+            dialogPane.getStylesheets().add("style.css");
             dialog.setTitle("Łączenie...");
             dialog.setHeaderText("Proszę czekać...");
             dialog.setContentText("Trwa łączenie z serwerem...");
@@ -69,6 +71,8 @@ public class LoginWindow {
             }
             if (result.isPresent() && result.get() == ButtonType.CANCEL) {
                 Alert connectionCanceledAlert = new Alert(Alert.AlertType.WARNING);
+                DialogPane pane = connectionCanceledAlert.getDialogPane();
+                pane.getStylesheets().add("style.css");
                 connectionCanceledAlert.setTitle("Uwaga");
                 connectionCanceledAlert.setHeaderText("Przerwano połączenie");
                 connectionCanceledAlert.setContentText("Przerwano połączenie z serwerem.");
@@ -112,6 +116,8 @@ public class LoginWindow {
             Platform.runLater(() -> {
                 dialog.close();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("style.css");
                 alert.setTitle("Błąd");
                 alert.setHeaderText("Błąd");
                 alert.setContentText("Nieprawidłowa nazwa serwera. Spróbuj ponownie.");
@@ -121,6 +127,8 @@ public class LoginWindow {
             Platform.runLater(() -> {
                 dialog.close();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("style.css");
                 alert.setHeaderText("Błąd");
                 alert.setContentText("Brak nazwy serwera. Wypełnij pole serwera.");
                 alert.show();
@@ -129,6 +137,8 @@ public class LoginWindow {
             Platform.runLater(() -> {
                 dialog.close();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("style.css");
                 alert.setHeaderText("Błąd");
                 alert.setContentText("Jedno lub więcej pól jest niewypełnione.");
                 alert.show();

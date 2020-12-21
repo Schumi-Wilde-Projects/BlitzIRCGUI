@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.schumiwildeprojects.PrimaryWindow">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.schumiwildeprojects.PrimaryWindow">
    <bottom>
-      <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
             <Label text="Wiadomość (komendę poprzedź ukośnikiem): ">
                <VBox.margin>
@@ -41,14 +40,14 @@
       </VBox>
    </bottom>
    <center>
-      <TextArea fx:id="messageTextArea" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="513.0" prefWidth="997.0" text="Tu będą wiadomości użytkowników i serwera" BorderPane.alignment="TOP_CENTER">
+      <TextArea fx:id="messageTextArea" nodeOrientation="LEFT_TO_RIGHT" prefHeight="513.0" prefWidth="997.0" text="Tu będą wiadomości użytkowników i serwera" BorderPane.alignment="TOP_CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
       </TextArea>
    </center>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="534.0" prefWidth="172.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Lista użytkowników:">
                <VBox.margin>
