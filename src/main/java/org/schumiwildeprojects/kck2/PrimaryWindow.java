@@ -52,7 +52,7 @@ public class PrimaryWindow {
                             e.printStackTrace();
                         }
                     } else if (line.split(" ")[1].equalsIgnoreCase("join")) {
-                        messagesStringBuilder.append("Użytkownik ").append(line.substring(1, line.indexOf("!~"))).append(" dołączył do czatu.\n");
+                        messagesStringBuilder.append("Użytkownik ").append(line, 1, line.indexOf("!~")).append(" dołączył do czatu.\n");
                         messageTextArea.setText(messagesStringBuilder.toString());
                         scrollMessagesToBottom();
                         App.getBufferedWriter().write("NAMES " + App.currentChannel + "\r\n");
@@ -72,7 +72,13 @@ public class PrimaryWindow {
                         });
                     } else if (line.split(" ")[1].equalsIgnoreCase("privmsg")) {
                         String[] splitLine = line.split(" ");
-                        String username = line.substring(1, line.indexOf("!~"));
+                        String username;
+                        if (splitLine[0].equals(":freenode-connect!frigg@freenode/utility-bot/frigg")) {
+                            username = splitLine[2];
+                        } else {
+                            username = line.substring(1, line.indexOf("!~"));
+                        }
+//                        String username = splitLine[2];
                         StringBuilder lineToAdd = new StringBuilder(splitLine[3].substring(1));
                         for (int i = 4; i < splitLine.length; i++) {
                             lineToAdd.append(" ").append(splitLine[i]);
@@ -148,7 +154,7 @@ public class PrimaryWindow {
                             App.getBufferedWriter().write("PRIVMSG " + commandTokens.get(1) + " :" + sbMessage.toString() + "\r\n");
                             App.getBufferedWriter().flush();
                             messagesStringBuilder.append(App.getCurrentNickname()).append(" -> ").append(commandTokens.get(1))
-                                    .append(": ").append(sbMessage.toString());
+                                    .append(": ").append(sbMessage.toString()).append("\n");
                             messageTextArea.setText(messagesStringBuilder.toString());
                             scrollMessagesToBottom();
                         } catch (IOException e) {
